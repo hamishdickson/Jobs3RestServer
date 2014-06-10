@@ -1,0 +1,7 @@
+# Intellij stuff
+.idea/
+*.iml
+*.iws
+
+# Tomcat stuff
+target/
