@@ -25,6 +25,7 @@ public class Server {
         final Map<String, String> initParams = new HashMap<String, String>();
 
         initParams.put("com.sun.jersey.config.property.packages", "com.jhc.figleaf.Jobs3RestApi.resources");
+        initParams.put("com.wordnik.swagger.jersey.listing", "com.jhc.figleaf.Jobs3RestApi.resources");
 
         System.out.println("Starting Grizzly server ....");
 
@@ -34,8 +35,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         HttpServer httpServer = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nTry out %shelloworld\nHit enter to stop it...",
-                BASE_URI, BASE_URI));
+                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
 
         System.in.read();
         httpServer.stop();
