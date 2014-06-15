@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by hamish dickson on 12/03/2014.
@@ -23,8 +22,6 @@ public class RealTracey {
     private static final String DB_CONNECTION = "jdbc:as400://" + ConfigManager.getSetting("server.address") + ";naming=system;prompt=false";
     private static final String DB_USER = ConfigManager.getSetting("username");
     private static final String DB_PASSWORD = ConfigManager.getSetting("password");
-
-    private static final AtomicInteger uniqueInvocationNumber = new AtomicInteger();
     private static final BasicDataSource dataSource = new BasicDataSource();
     private static final AS400 as400;
 
@@ -35,8 +32,8 @@ public class RealTracey {
 
     static {
         dataSource.setDriverClassName("com.ibm.as400.access.AS400JDBCDriver");
-        dataSource.setMaxActive(Integer.valueOf(5).intValue());
-        dataSource.setMaxIdle(Integer.valueOf(2).intValue());
+        dataSource.setMaxActive(5);
+        dataSource.setMaxIdle(2);
         dataSource.setValidationQuery("SELECT * FROM " + LIBRARY + "/JOBS3 WHERE CODEX = 170395");
         dataSource.setTestOnBorrow(true);
         dataSource.setUsername(DB_USER);
@@ -138,7 +135,7 @@ public class RealTracey {
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
 
         } finally {
             if (preparedStatement != null) {
@@ -185,6 +182,6 @@ public class RealTracey {
 
         }
 
-        return dbConnection;
+        return null;
     }
 }
