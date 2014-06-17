@@ -2,6 +2,7 @@ package com.jhc.figleaf.Jobs3RestApi.database;
 
 import com.ibm.as400.access.*;
 import com.jhc.figleaf.Jobs3RestApi.models.Job;
+import com.jhc.figleaf.Jobs3RestApi.models.JobNotes;
 import com.jhc.figleaf.Jobs3RestApi.utils.ConfigManager;
 import org.apache.commons.dbcp.BasicDataSource;
 
@@ -86,6 +87,28 @@ public class RealTracey {
             resultSet.close();
 
             return jobs;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public static JobNotes getJobNotes(int jobNumber) throws SQLException {
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            String selectSQL = "SELECT TEXT79 FROM " + LIBRARY + "/JOBSCRAT WHERE CODEX = " + jobNumber + " ORDER BY PAGNUM, LINNUM" ;
+            ResultSet resultSet = statement.executeQuery(selectSQL);
+
+            List<String> notes = new ArrayList<String>();
+
+            while (resultSet.next()) {
+                notes.add(resultSet.getString(1));
+            }
+
+            statement.close();
+            resultSet.close();
+
+            return new JobNotes(jobNumber, notes, 0);
         } catch (SQLException e) {
             return null;
         }

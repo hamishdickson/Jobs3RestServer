@@ -2,7 +2,7 @@ package com.jhc.figleaf.Jobs3RestApi.resources;
 
 import com.google.gson.Gson;
 import com.jhc.figleaf.Jobs3RestApi.database.RealTracey;
-import com.jhc.figleaf.Jobs3RestApi.models.Job;
+import com.jhc.figleaf.Jobs3RestApi.models.JobNotes;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -33,9 +33,9 @@ public class JobNotesResource {
     )
     public Response getTestJob(@ApiParam(value = "Job number", required = true) @PathParam("jobNumber") int jobNumber) {
         try {
-            Job job = RealTracey.getJob(jobNumber);
+            JobNotes jobNotes = RealTracey.getJobNotes(jobNumber);
 
-            return Response.ok().entity(new Gson().toJson(job)).build();
+            return Response.ok().entity(new Gson().toJson(jobNotes)).build();
         } catch (SQLException e) {
             // meh
         }
