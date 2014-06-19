@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class RealTracey {
 
-    private static final String DB_DRIVER = "com.ibm.as400.access.AS400JDBCDriver";
     private static final String DB_CONNECTION = "jdbc:as400://" + ConfigManager.getSetting("server.address") + ";naming=system;prompt=false";
     private static final String DB_USER = ConfigManager.getSetting("username");
     private static final String DB_PASSWORD = ConfigManager.getSetting("password");
@@ -43,75 +42,83 @@ public class RealTracey {
         as400 = new AS400("TRACEY", DB_USER, DB_PASSWORD);
     }
 
-    private static final int CLOSE_DATE = 20391231; // not my fault - blame JMM
+    private static final int CLOSE_DATE = 20391231; // this is hard coded in jobs3
     private static final String JOB_FIELDS = "CODEX, DESCRQ, WHODO, STATUS, CLIENT, IMPORT, WHOPAY, CONTAC, BCODEX, JTYPE, EXTRA4, EXTRA1, SYSTEM, INVTXT, REQUES, TIMEIN, JBUG, LIVUAT, RLSVER, PROJ";
+
+    private static Statement statement;
+    private static ResultSet resultSet;
+
+    private static ResultSet getResultSet(String sqlStatement) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sqlStatement);
+
+        return resultSet;
+    }
+
+    private static void closeDownQuery() throws SQLException {
+        statement.close();
+        resultSet.close();
+    }
 
     public static Job getJob(int jobNumber) throws SQLException {
 
-        try {
-            Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE CODEX = " + jobNumber + " FETCH FIRST 1 ROWS ONLY";
-            ResultSet resultSet = statement.executeQuery(selectSQL);
+        Job job = null;
 
-            Job job = null;
+        try {
+            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE CODEX = " + jobNumber + " FETCH FIRST 1 ROWS ONLY";
+            getResultSet(selectSQL);
 
             while (resultSet.next()) {
                 job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N");
             }
 
-            statement.close();
-            resultSet.close();
-
-            return job;
         } catch (SQLException e) {
-            return new Job();
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
         }
+        return job;
 
     }
 
     public static List<Job> getJobsForUser(String user) throws SQLException {
-        try {
-            Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user + "'" ;
-            ResultSet resultSet = statement.executeQuery(selectSQL);
 
-            List<Job> jobs = new ArrayList<Job>();
+        List<Job> jobs = new ArrayList<Job>();
+
+        try {
+            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user + "'" ;
+            getResultSet(selectSQL);
 
             while (resultSet.next()) {
                 jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N"));
             }
 
-            statement.close();
-            resultSet.close();
-
-            return jobs;
         } catch (SQLException e) {
-            return null;
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
         }
+        return jobs;
     }
 
     public static JobNotes getJobNotes(int jobNumber) throws SQLException {
-        try {
-            Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            String selectSQL = "SELECT TEXT79 FROM " + LIBRARY + "/JOBSCRAT WHERE CODEX = " + jobNumber + " ORDER BY PAGNUM, LINNUM" ;
-            ResultSet resultSet = statement.executeQuery(selectSQL);
 
-            List<String> notes = new ArrayList<String>();
+        List<String> notes = new ArrayList<String>();
+
+        try {
+            String selectSQL = "SELECT TEXT79 FROM " + LIBRARY + "/JOBSCRAT WHERE CODEX = " + jobNumber + " ORDER BY PAGNUM, LINNUM" ;
+            getResultSet(selectSQL);
 
             while (resultSet.next()) {
                 notes.add(resultSet.getString(1));
             }
-
-            statement.close();
-            resultSet.close();
-
-            return new JobNotes(jobNumber, notes, 0);
         } catch (SQLException e) {
-            return null;
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
         }
+        return new JobNotes(jobNumber, notes, 0);
     }
 
     /**
@@ -126,7 +133,6 @@ public class RealTracey {
 
         try {
             Connection connection = dataSource.getConnection();
-            //Statement statement = connection.createStatement();
             String insertSQL = "INSERT INTO " + LIBRARY + "/JOBS3 "
                     + "(" + JOB_FIELDS + ", APPROV, COMPLE) VALUES"
                     + "(?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -158,14 +164,14 @@ public class RealTracey {
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException ignored) {
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
-            return job;
         }
+        return job;
     }
 
     private static int getNextJobNumber() throws SQLException, InterruptedException, IOException, IllegalObjectTypeException, ObjectDoesNotExistException, ErrorCompletingRequestException, AS400SecurityException {
@@ -177,34 +183,5 @@ public class RealTracey {
         dataArea.write(jobNumber.add(new BigDecimal(1)));
 
         return jobNumber.intValueExact();
-    }
-
-    private static Connection getDBConnection() {
-
-        Connection dbConnection = null;
-
-        try {
-
-            Class.forName(DB_DRIVER);
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-        try {
-
-            dbConnection = DriverManager.getConnection(
-                    DB_CONNECTION, DB_USER, DB_PASSWORD);
-            return dbConnection;
-
-        } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-        return null;
     }
 }
