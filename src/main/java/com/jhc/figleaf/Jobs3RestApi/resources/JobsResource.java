@@ -41,7 +41,7 @@ public class JobsResource {
 
             return Response.ok().entity(new Gson().toJson(job)).build();
         } catch (SQLException e) {
-            // meh
+            e.printStackTrace();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
     }
@@ -61,7 +61,7 @@ public class JobsResource {
 
             return Response.ok().entity(new Gson().toJson(jobs)).build();
         } catch (SQLException e) {
-            // meh ...
+            e.printStackTrace();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
     }

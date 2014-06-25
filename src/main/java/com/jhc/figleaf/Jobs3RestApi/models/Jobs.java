@@ -20,6 +20,12 @@ public class Jobs {
         jobList.add(new Job());
         jobList.add(new Job());
         jobList.add(new Job());
+        jobList.add(new Job());
+        jobList.add(new Job());
+        jobList.add(new Job());
+        jobList.add(new Job());
+        jobList.add(new Job());
+        jobList.add(new Job());
     }
 
     public static void addJob(Job job) {
@@ -52,6 +58,10 @@ public class Jobs {
         }
         //return new Gson().toJson(new Job(0, "this is a test job", "me do", "A", "bob", 1, "something", "string", 1, "another"));
         return new Gson().toJson(new Job());
+    }
+
+    public static String getJobsList() {
+        return new Gson().toJson(jobList);
     }
 
     public static String toJsonString() {

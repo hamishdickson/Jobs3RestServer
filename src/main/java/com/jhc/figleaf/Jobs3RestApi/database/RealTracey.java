@@ -25,6 +25,12 @@ public class RealTracey {
     private static final BasicDataSource dataSource = new BasicDataSource();
     private static final AS400 as400;
 
+    private static final int CLOSE_DATE = 20391231; // this is hard coded in jobs3
+    private static final String JOB_FIELDS = "CODEX, DESCRQ, WHODO, STATUS, CLIENT, IMPORT, WHOPAY, CONTAC, BCODEX, JTYPE, EXTRA4, EXTRA1, SYSTEM, INVTXT, REQUES, TIMEIN, JBUG, LIVUAT, RLSVER, PROJ";
+
+    private static Statement statement;
+    private static ResultSet resultSet;
+
     /**
      * specify the library
      */
@@ -41,12 +47,6 @@ public class RealTracey {
         dataSource.setUrl(DB_CONNECTION);
         as400 = new AS400("TRACEY", DB_USER, DB_PASSWORD);
     }
-
-    private static final int CLOSE_DATE = 20391231; // this is hard coded in jobs3
-    private static final String JOB_FIELDS = "CODEX, DESCRQ, WHODO, STATUS, CLIENT, IMPORT, WHOPAY, CONTAC, BCODEX, JTYPE, EXTRA4, EXTRA1, SYSTEM, INVTXT, REQUES, TIMEIN, JBUG, LIVUAT, RLSVER, PROJ";
-
-    private static Statement statement;
-    private static ResultSet resultSet;
 
     private static ResultSet getResultSet(String sqlStatement) throws SQLException {
         Connection connection = dataSource.getConnection();

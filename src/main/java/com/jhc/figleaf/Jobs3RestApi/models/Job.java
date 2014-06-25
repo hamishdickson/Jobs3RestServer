@@ -3,7 +3,7 @@ package com.jhc.figleaf.Jobs3RestApi.models;
 /**
  * Created by hamish dickson on 09/03/2014.
  *
- * Bean for particle
+ * Bean for job
  */
 public class Job {
     private int jobNumber;

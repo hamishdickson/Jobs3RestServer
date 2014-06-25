@@ -37,7 +37,7 @@ public class JobNotesResource {
 
             return Response.ok().entity(new Gson().toJson(jobNotes)).build();
         } catch (SQLException e) {
-            // meh
+            e.printStackTrace();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
     }
