@@ -7,6 +7,7 @@ import com.ibm.as400.access.IllegalObjectTypeException;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 import com.jhc.figleaf.Jobs3RestApi.database.RealTracey;
 import com.jhc.figleaf.Jobs3RestApi.models.Job;
+import com.jhc.figleaf.Jobs3RestApi.models.Jobs;
 import com.wordnik.swagger.annotations.*;
 
 import javax.ws.rs.*;
@@ -25,6 +26,19 @@ import java.util.List;
 @Path("/job")
 @Api( value = "/job", description = "Open API to the jobs system" )
 public class JobsResource {
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(
+            value = "List all the jobs in the jobs system ... actually no, that would be stupid - just return the last 100",
+            notes = "Probably not that helpful ... but great for testing",
+            response = Response.class,
+            responseContainer = "JSON"
+    )
+    public Response getTestJobs() {
+        String output = "{\"jobs\":" + Jobs.getJobsList() + "}";
+        return Response.ok().entity(output).build();
+    }
+
     @GET
     @Path("/{jobNumber}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,8 +72,8 @@ public class JobsResource {
     public Response getJobsForUser(@ApiParam(value = "User Id", required = true) @PathParam("userId") String userId) {
         try {
             List<Job> jobs = RealTracey.getJobsForUser(userId);
-
-            return Response.ok().entity(new Gson().toJson(jobs)).build();
+            String output = "{\"jobs\":" +  new Gson().toJson(jobs) + "}";
+            return Response.ok().entity(output).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }

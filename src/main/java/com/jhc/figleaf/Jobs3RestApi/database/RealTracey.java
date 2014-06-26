@@ -40,12 +40,13 @@ public class RealTracey {
         dataSource.setDriverClassName("com.ibm.as400.access.AS400JDBCDriver");
         dataSource.setMaxActive(5);
         dataSource.setMaxIdle(2);
-        dataSource.setValidationQuery("SELECT * FROM " + LIBRARY + "/JOBS3 WHERE CODEX = 170395");
+        dataSource.setValidationQuery("SELECT * FROM " + LIBRARY + "/JOBS3 WHERE CODEX = 170396");
         dataSource.setTestOnBorrow(true);
         dataSource.setUsername(DB_USER);
         dataSource.setPassword(DB_PASSWORD);
         dataSource.setUrl(DB_CONNECTION);
         as400 = new AS400("TRACEY", DB_USER, DB_PASSWORD);
+        System.out.println("Got configuration data: " + DB_CONNECTION);
     }
 
     private static ResultSet getResultSet(String sqlStatement) throws SQLException {
@@ -87,7 +88,7 @@ public class RealTracey {
         List<Job> jobs = new ArrayList<Job>();
 
         try {
-            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user + "'" ;
+            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND STATUS <> 'C'" ;
             getResultSet(selectSQL);
 
             while (resultSet.next()) {

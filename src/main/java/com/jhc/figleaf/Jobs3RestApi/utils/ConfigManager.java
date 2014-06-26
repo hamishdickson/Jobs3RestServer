@@ -55,7 +55,7 @@ public class ConfigManager {
 
     private static String getPropertiesLocation() {
         if (System.getProperty("os.name").toLowerCase().indexOf( "win" ) == 0) {
-            return new File(ConfigManager.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParent() + "\\dicksonh\\Documents\\GitHub\\RestTemplateApp\\src\\main\\webapp\\restapp.properties";
+            return new File(ConfigManager.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParent() + "\\dicksonh\\Documents\\GitHub\\Jobs3RestServer\\src\\main\\webapp\\restapp.properties";
         } else {
             return "/opt/jhc/figleaf/restapp.properties";
         }

@@ -1,5 +1,6 @@
 package com.jhc.figleaf.Jobs3RestApi.server;
 
+import com.jhc.figleaf.Jobs3RestApi.database.RealTracey;
 import com.sun.grizzly.http.embed.GrizzlyWebServer;
 import com.sun.grizzly.http.servlet.ServletAdapter;
 import com.sun.jersey.api.container.grizzly2.GrizzlyWebContainerFactory;
@@ -22,7 +23,7 @@ public class Server {
     private static final URI BASE_URI = getBaseUri();
 
     private static URI getBaseUri() {
-        return UriBuilder.fromUri("http://localhost/").port(8080).build();
+        return UriBuilder.fromUri("http://localhost/").port(PORT).build();
     }
 
 
@@ -38,6 +39,7 @@ public class Server {
     }
 
     protected static GrizzlyWebServer startGrizzlyServer() throws IOException {
+        RealTracey tracey = new RealTracey();
         GrizzlyWebServer grizzlyWebServer = new GrizzlyWebServer(PORT);
 
         ServletAdapter jerseyAdapter = new ServletAdapter();
