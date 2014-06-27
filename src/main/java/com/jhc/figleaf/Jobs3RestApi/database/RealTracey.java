@@ -88,7 +88,7 @@ public class RealTracey {
         Person person = null;
 
         try {
-            String selectSql = "SELECT TENAME, TEEAR, TEESCA, TEUSER FROM TEARNER WHERE TEEAR = '" + whoDo + "' FETCH FIRST 1 ROWS ONLY";
+            String selectSql = "SELECT TENAME, TEEAR, TETEAM, TEUSER FROM TEARNER WHERE TEEAR = '" + whoDo.toUpperCase() + "' FETCH FIRST 1 ROWS ONLY";
             getResultSet(selectSql);
 
             while (resultSet.next()) {

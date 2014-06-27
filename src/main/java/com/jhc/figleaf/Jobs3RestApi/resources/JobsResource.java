@@ -47,7 +47,7 @@ public class JobsResource {
     }
 
     @GET
-    @Path("/user/userId")
+    @Path("/user")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Find details of a specific job",
@@ -55,9 +55,15 @@ public class JobsResource {
             response = Response.class,
             responseContainer = "JSON"
     )
-    public Response getJobsForUser(@ApiParam(value = "User Id", required = true) @PathParam("userId") String userId, @QueryParam("status") String status) {
+    public Response getJobsForUser(@QueryParam("userId")  String userId, @QueryParam("status") String status) {
+        System.out.println("Request for: userId=" + userId + " and status=" + status);
         try {
-            List<Job> jobs = RealTracey.getJobsForUserAndStatus(userId, status);
+            List<Job> jobs = null;
+            if (status != null) {
+                jobs = RealTracey.getJobsForUserAndStatus(userId, status);
+            } else {
+                jobs = RealTracey.getJobsForUserAndStatus(userId);
+            }
             String output = "{\"jobs\":" +  new Gson().toJson(jobs) + "}";
             return Response.ok().entity(output).build();
         } catch (SQLException e) {
@@ -66,6 +72,15 @@ public class JobsResource {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
+    @GET
+    @Path("/user/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(
+            value = "Find details of a specific job",
+            notes = "The americans once nearly destroyed the earth with a bomb called castle bravo",
+            response = Response.class,
+            responseContainer = "JSON"
+    )
     public Response getJobsForUser(@ApiParam(value = "User Id", required = true) @PathParam("userId") String userId) {
         try {
             List<Job> jobs = RealTracey.getJobsForUserAndStatus(userId);
