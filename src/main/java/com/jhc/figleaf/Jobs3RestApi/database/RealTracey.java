@@ -3,6 +3,7 @@ package com.jhc.figleaf.Jobs3RestApi.database;
 import com.ibm.as400.access.*;
 import com.jhc.figleaf.Jobs3RestApi.models.Job;
 import com.jhc.figleaf.Jobs3RestApi.models.JobNotes;
+import com.jhc.figleaf.Jobs3RestApi.models.Person;
 import com.jhc.figleaf.Jobs3RestApi.utils.ConfigManager;
 import org.apache.commons.dbcp.BasicDataSource;
 
@@ -83,13 +84,40 @@ public class RealTracey {
 
     }
 
-    public static List<Job> getJobsForUser(String user) throws SQLException {
+    public static Person getPersonByWhoDo(String whoDo) throws SQLException {
+        Person person = null;
 
+        try {
+            String selectSql = "SELECT TENAME, TEEAR, TEESCA, TEUSER FROM TEARNER WHERE TEEAR = '" + whoDo + "' FETCH FIRST 1 ROWS ONLY";
+            getResultSet(selectSql);
+
+            while (resultSet.next()) {
+                person = new Person(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
+        }
+        return person;
+    }
+
+    public static List<Job> getJobsForUserAndStatus(String user, String status) throws SQLException {
+
+        String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND STATUS = '" + status.toUpperCase() + "'" ;
+        return doSqlForGetJobsForUserAndStatus(selectSQL);
+    }
+
+    public static List<Job> getJobsForUserAndStatus(String user) throws SQLException {
+        String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "'" ;
+        return doSqlForGetJobsForUserAndStatus(selectSQL);
+    }
+
+    private static List<Job> doSqlForGetJobsForUserAndStatus(String sqlStatement) throws SQLException {
         List<Job> jobs = new ArrayList<Job>();
 
         try {
-            String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND STATUS <> 'C'" ;
-            getResultSet(selectSQL);
+            getResultSet(sqlStatement);
 
             while (resultSet.next()) {
                 jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N"));

@@ -26,7 +26,7 @@ public class JobsTestResource {
             responseContainer = "JSON"
     )
     public Response getTestJobs() {
-        String output = "{\"jobs\":" + Jobs.getJobsList() + "}";
+        String output = "{\"personName\": \"Hamish Dickson\", \"jobs\":" + Jobs.getJobsList() + "}";
         return Response.ok().entity(output).build();
     }
 
