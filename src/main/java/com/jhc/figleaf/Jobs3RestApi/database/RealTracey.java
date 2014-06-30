@@ -103,8 +103,12 @@ public class RealTracey {
     }
 
     public static List<Job> getJobsForUserAndStatus(String user, String status) throws SQLException {
-
-        String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND STATUS = '" + status.toUpperCase() + "'" ;
+        String selectSQL = "";
+        if (status.toUpperCase().equals("Z")) {
+            selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND (STATUS = 'A' OR STATUS = 'B')";
+        } else {
+            selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND STATUS = '" + status.toUpperCase() + "'";
+        }
         return doSqlForGetJobsForUserAndStatus(selectSQL);
     }
 

@@ -47,7 +47,7 @@ public class JobsResource {
     }
 
     @GET
-    @Path("/user")
+    @Path("/user/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Find details of a specific job",
@@ -55,8 +55,9 @@ public class JobsResource {
             response = Response.class,
             responseContainer = "JSON"
     )
-    public Response getJobsForUser(@QueryParam("userId")  String userId, @QueryParam("status") String status) {
+    public Response getJobsForUser(@PathParam("userId")  String userId, @QueryParam("status") String status) {
         System.out.println("Request for: userId=" + userId + " and status=" + status);
+
         try {
             List<Job> jobs = null;
             if (status != null) {
@@ -64,7 +65,7 @@ public class JobsResource {
             } else {
                 jobs = RealTracey.getJobsForUserAndStatus(userId);
             }
-            String output = "{\"jobs\":" +  new Gson().toJson(jobs) + "}";
+            String output = "{\"jobs\":" + new Gson().toJson(jobs) + "}";
             return Response.ok().entity(output).build();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +73,7 @@ public class JobsResource {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
-    @GET
+/*    @GET
     @Path("/user/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
@@ -82,6 +83,7 @@ public class JobsResource {
             responseContainer = "JSON"
     )
     public Response getJobsForUser(@ApiParam(value = "User Id", required = true) @PathParam("userId") String userId) {
+        System.out.println("Request for: userId=" + userId);
         try {
             List<Job> jobs = RealTracey.getJobsForUserAndStatus(userId);
             String output = "{\"jobs\":" +  new Gson().toJson(jobs) + "}";
@@ -90,7 +92,7 @@ public class JobsResource {
             e.printStackTrace();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
-    }
+    }*/
 
     /**
      * Use POST to create new jobs
