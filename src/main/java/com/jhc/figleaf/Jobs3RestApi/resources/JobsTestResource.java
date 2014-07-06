@@ -1,7 +1,10 @@
 package com.jhc.figleaf.Jobs3RestApi.resources;
 
+import com.google.gson.Gson;
 import com.jhc.figleaf.Jobs3RestApi.models.Job;
+import com.jhc.figleaf.Jobs3RestApi.models.JobNotes;
 import com.jhc.figleaf.Jobs3RestApi.models.Jobs;
+import com.jhc.figleaf.Jobs3RestApi.models.Person;
 import com.wordnik.swagger.annotations.*;
 
 import javax.ws.rs.*;
@@ -46,6 +49,36 @@ public class JobsTestResource {
             return Response.ok().entity(Jobs.getJobJson(jobNumber)).build();
         }
 
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @GET
+    @Path("/person")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPerson() {
+        Person person = new Person("Hamish Dickson", "HD", "NB", "DICKSONH");
+
+        return Response.ok().entity(new Gson().toJson(person)).build();
+
+    }
+
+    @GET
+    @Path("/jobNotes/{jobNumber}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJobNotesForJob(@ApiParam(value = "Job number", required = true) @PathParam("jobNumber") int jobNumber) {
+        JobNotes jobNotes = new JobNotes(jobNumber, "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
+                + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
+                + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
+                , 3);
+
+        return Response.ok().entity(new Gson().toJson(jobNotes)).build();
+
+    }
+
+    @GET
+    @Path("/emptyperson")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEmptyPerson() {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
