@@ -69,9 +69,9 @@ public class JobsTestResource {
     }
 
     @GET
-    @Path("/person")
+    @Path("/person/{personId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPerson() {
+    public Response getPerson(@ApiParam(value = "Person", required = true) @PathParam("personId") String personId) {
         Person person = new Person("Hamish Dickson", "HD", "NB", "DICKSONH");
 
         return Response.ok().entity(new Gson().toJson(person)).build();
