@@ -35,6 +35,22 @@ public class JobsTestResource {
     }
 
     @GET
+    @Path("/user/{user}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(
+            value = "List all the jobs in the jobs system ... actually no, that would be stupid - just return the last 100",
+            notes = "Probably not that helpful ... but great for testing",
+            response = Response.class,
+            responseContainer = "JSON"
+    )
+    public Response getUserTestJobs(@ApiParam(value = "User", required = true) @PathParam("user") String user) {
+        System.out.println("Call to test system made");
+        String output = "{\"jobs\":" + Jobs.getJobsList() + "}";
+        //String output = Jobs.getJobsList();
+        return Response.ok().entity(output).build();
+    }
+
+    @GET
     @Path("/{jobNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
