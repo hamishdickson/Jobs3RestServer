@@ -33,7 +33,7 @@ public class JobsTestResource {
         String output = "{\"personName\": \"Hamish Dickson\", \"jobs\":" + Jobs.getJobsList() + "}";
         return Response.ok().entity(output).build();
     }
-
+/*
     @GET
     @Path("/user/{user}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,6 +45,22 @@ public class JobsTestResource {
     )
     public Response getUserTestJobs(@ApiParam(value = "User", required = true) @PathParam("user") String user) {
         System.out.println("Call to test system made");
+        String output = "{\"jobs\":" + Jobs.getJobsList() + "}";
+        //String output = Jobs.getJobsList();
+        return Response.ok().entity(output).build();
+    }*/
+
+    @GET
+    @Path("/user/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(
+            value = "Find details of a specific job",
+            notes = "The americans once nearly destroyed the earth with a bomb called castle bravo",
+            response = Response.class,
+            responseContainer = "JSON"
+    )
+    public Response getJobsForUser(@PathParam("userId")  String userId, @QueryParam("status") String status) {
+        System.out.println("Request for: userId=" + userId + " and status=" + status);
         String output = "{\"jobs\":" + Jobs.getJobsList() + "}";
         //String output = Jobs.getJobsList();
         return Response.ok().entity(output).build();
@@ -86,6 +102,8 @@ public class JobsTestResource {
                 + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
                 + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
                 , 3);
+
+        System.out.println("Call to test system made: job notes for job " + jobNumber);
 
         return Response.ok().entity(new Gson().toJson(jobNotes)).build();
 
