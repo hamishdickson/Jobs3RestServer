@@ -32,6 +32,8 @@ public class RealTracey {
     private static Statement statement;
     private static ResultSet resultSet;
 
+    private static Connection connection;
+
     /**
      * specify the library
      */
@@ -39,7 +41,7 @@ public class RealTracey {
 
     static {
         dataSource.setDriverClassName("com.ibm.as400.access.AS400JDBCDriver");
-        dataSource.setMaxActive(5);
+        dataSource.setMaxActive(2);
         dataSource.setMaxIdle(2);
         dataSource.setValidationQuery("SELECT * FROM " + LIBRARY + "/JOBS3 WHERE CODEX = 170396");
         dataSource.setTestOnBorrow(true);
@@ -51,7 +53,7 @@ public class RealTracey {
     }
 
     private static ResultSet getResultSet(String sqlStatement) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        connection = dataSource.getConnection();
         statement = connection.createStatement();
         resultSet = statement.executeQuery(sqlStatement);
 
@@ -61,6 +63,7 @@ public class RealTracey {
     private static void closeDownQuery() throws SQLException {
         statement.close();
         resultSet.close();
+        connection.close();
     }
 
     public static Job getJob(int jobNumber) throws SQLException {
