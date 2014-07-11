@@ -2,25 +2,23 @@ package com.jhc.figleaf.Jobs3RestApi.models;
 
 /**
  * Created by DicksonH on 10/07/2014.
+ *
  */
 public class Deliverable {
-    private int jobNumber;
-    private int id;
+    private DeliverableKey deliverableKey;
     private String type;
     private String description;
-    private int promisedDate;
     private int deliveredDate;
     private String whoDo;
     private String deleted;
     private String app;
     private String internal;
 
-    public Deliverable(int jobNumber, int id, String type, String description, int promisedDate, int deliveredDate, String whoDo, String deleted, String app, String internal) {
-        this.jobNumber = jobNumber;
-        this.id = id;
+
+    public Deliverable(DeliverableKey deliverableKey, String type, String description, int deliveredDate, String whoDo, String deleted, String app, String internal) {
+        this.deliverableKey = deliverableKey;
         this.type = type;
         this.description = description;
-        this.promisedDate = promisedDate;
         this.deliveredDate = deliveredDate;
         this.whoDo = whoDo;
         this.deleted = deleted;
@@ -28,20 +26,12 @@ public class Deliverable {
         this.internal = internal;
     }
 
-    public int getJobNumber() {
-        return jobNumber;
+    public DeliverableKey getDeliverableKey() {
+        return deliverableKey;
     }
 
-    public void setJobNumber(int jobNumber) {
-        this.jobNumber = jobNumber;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setDeliverableKey(DeliverableKey deliverableKey) {
+        this.deliverableKey = deliverableKey;
     }
 
     public String getType() {
@@ -58,14 +48,6 @@ public class Deliverable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getPromisedDate() {
-        return promisedDate;
-    }
-
-    public void setPromisedDate(int promisedDate) {
-        this.promisedDate = promisedDate;
     }
 
     public int getDeliveredDate() {

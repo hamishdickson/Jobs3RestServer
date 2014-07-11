@@ -1,9 +1,8 @@
 package com.jhc.figleaf.Jobs3RestApi.database;
 
 import com.ibm.as400.access.*;
+import com.jhc.figleaf.Jobs3RestApi.models.*;
 import com.jhc.figleaf.Jobs3RestApi.models.Job;
-import com.jhc.figleaf.Jobs3RestApi.models.JobNotes;
-import com.jhc.figleaf.Jobs3RestApi.models.Person;
 import com.jhc.figleaf.Jobs3RestApi.utils.ConfigManager;
 import org.apache.commons.dbcp.BasicDataSource;
 
@@ -11,6 +10,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -155,6 +155,46 @@ public class RealTracey {
             closeDownQuery();
         }
         return new JobNotes(jobNumber, notes, 0);
+    }
+
+    public static List<DeliverableKey> getDeliverablesForUser(String whodo) throws SQLException {
+        List<DeliverableKey> deliverableKeys = new ArrayList<DeliverableKey>();
+
+        String sqlStatement = "SELECT CODEX, UNQREF, PROMD8 FROM DELVRB WHERE WHODO='" + whodo.toUpperCase() + "' AND DELTED = ' ' AND DELD8 = 0 ORDER BY CODEX, PROMD8, UNQREF";
+        try {
+            getResultSet(sqlStatement);
+
+            while (resultSet.next()) {
+                deliverableKeys.add(new DeliverableKey(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3)));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
+        }
+        return deliverableKeys;
+
+    }
+
+    // TODO have a think about how useful this actually is
+    public static Deliverable getDeliverable(int jobNumber, int id) throws SQLException {
+        Deliverable deliverable = null;
+
+        try {
+            String selectSQL = "SELECT PROMD8, TYPE, DESC, DELD8, DELTED, WHODO, APP, INTRNL FROM " + LIBRARY + "/DELVRB WHERE CODEX=" + jobNumber + " AND UNQREF=" + id + " FETCH FIRST 1 ROWS ONLY";
+            getResultSet(selectSQL);
+
+            while (resultSet.next()) {
+                deliverable = new Deliverable(new DeliverableKey(jobNumber, id, resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
+        }
+
+        return deliverable;
     }
 
     /**
