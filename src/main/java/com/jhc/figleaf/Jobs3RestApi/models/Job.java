@@ -1,5 +1,7 @@
 package com.jhc.figleaf.Jobs3RestApi.models;
 
+import java.util.List;
+
 /**
  * Created by hamish dickson on 09/03/2014.
  *
@@ -27,8 +29,9 @@ public class Job {
     private String releaseVersion;
     private String project;
     private String urgent;
+    private List<Deliverable> deliverables;
 
-    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent) {
+/*    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent) {
         this.jobNumber = jobNumber;
         this.description = description;
         this.whoDo = whoDo;
@@ -50,6 +53,31 @@ public class Job {
         this.releaseVersion = releaseVersion;
         this.project = project;
         this.urgent = urgent;
+    }*/
+
+    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables) {
+        this.jobNumber = jobNumber;
+        this.description = description;
+        this.whoDo = whoDo;
+        this.status = status;
+        this.client = client;
+        this.importance = importance;
+        this.whoPay = whoPay;
+        this.contact = contact;
+        this.workorder = workorder;
+        this.jobType = jobType;
+        this.enteredBy = enteredBy;
+        this.functionalArea = functionalArea;
+        this.system = system;
+        this.invoiceText = invoiceText;
+        this.enteredDate = enteredDate;
+        this.enteredTime = enteredTime;
+        this.defect = defect;
+        this.liveUat = liveUat;
+        this.releaseVersion = releaseVersion;
+        this.project = project;
+        this.urgent = urgent;
+        this.deliverables = deliverables;
     }
 
     public Job() {
@@ -223,6 +251,14 @@ public class Job {
         this.status = status;
     }
 
+    public List<Deliverable> getDeliverables() {
+        return deliverables;
+    }
+
+    public void setDeliverables(List<Deliverable> deliverables) {
+        this.deliverables = deliverables;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -230,13 +266,59 @@ public class Job {
 
         Job job = (Job) o;
 
-        return jobNumber == job.jobNumber;
+        if (enteredDate != job.enteredDate) return false;
+        if (enteredTime != job.enteredTime) return false;
+        if (importance != job.importance) return false;
+        if (jobNumber != job.jobNumber) return false;
+        if (workorder != job.workorder) return false;
+        if (client != null ? !client.equals(job.client) : job.client != null) return false;
+        if (contact != null ? !contact.equals(job.contact) : job.contact != null) return false;
+        if (defect != null ? !defect.equals(job.defect) : job.defect != null) return false;
+        if (deliverables != null ? !deliverables.equals(job.deliverables) : job.deliverables != null) return false;
+        if (description != null ? !description.equals(job.description) : job.description != null) return false;
+        if (enteredBy != null ? !enteredBy.equals(job.enteredBy) : job.enteredBy != null) return false;
+        if (functionalArea != null ? !functionalArea.equals(job.functionalArea) : job.functionalArea != null)
+            return false;
+        if (invoiceText != null ? !invoiceText.equals(job.invoiceText) : job.invoiceText != null) return false;
+        if (jobType != null ? !jobType.equals(job.jobType) : job.jobType != null) return false;
+        if (liveUat != null ? !liveUat.equals(job.liveUat) : job.liveUat != null) return false;
+        if (project != null ? !project.equals(job.project) : job.project != null) return false;
+        if (releaseVersion != null ? !releaseVersion.equals(job.releaseVersion) : job.releaseVersion != null)
+            return false;
+        if (status != null ? !status.equals(job.status) : job.status != null) return false;
+        if (system != null ? !system.equals(job.system) : job.system != null) return false;
+        if (urgent != null ? !urgent.equals(job.urgent) : job.urgent != null) return false;
+        if (whoDo != null ? !whoDo.equals(job.whoDo) : job.whoDo != null) return false;
+        if (whoPay != null ? !whoPay.equals(job.whoPay) : job.whoPay != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return jobNumber;
+        int result = jobNumber;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (whoDo != null ? whoDo.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (client != null ? client.hashCode() : 0);
+        result = 31 * result + importance;
+        result = 31 * result + (whoPay != null ? whoPay.hashCode() : 0);
+        result = 31 * result + (contact != null ? contact.hashCode() : 0);
+        result = 31 * result + workorder;
+        result = 31 * result + (jobType != null ? jobType.hashCode() : 0);
+        result = 31 * result + (enteredBy != null ? enteredBy.hashCode() : 0);
+        result = 31 * result + (functionalArea != null ? functionalArea.hashCode() : 0);
+        result = 31 * result + (system != null ? system.hashCode() : 0);
+        result = 31 * result + (invoiceText != null ? invoiceText.hashCode() : 0);
+        result = 31 * result + enteredDate;
+        result = 31 * result + enteredTime;
+        result = 31 * result + (defect != null ? defect.hashCode() : 0);
+        result = 31 * result + (liveUat != null ? liveUat.hashCode() : 0);
+        result = 31 * result + (releaseVersion != null ? releaseVersion.hashCode() : 0);
+        result = 31 * result + (project != null ? project.hashCode() : 0);
+        result = 31 * result + (urgent != null ? urgent.hashCode() : 0);
+        result = 31 * result + (deliverables != null ? deliverables.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -252,6 +334,18 @@ public class Job {
                 ", contact='" + contact + '\'' +
                 ", workorder=" + workorder +
                 ", jobType='" + jobType + '\'' +
+                ", enteredBy='" + enteredBy + '\'' +
+                ", functionalArea='" + functionalArea + '\'' +
+                ", system='" + system + '\'' +
+                ", invoiceText='" + invoiceText + '\'' +
+                ", enteredDate=" + enteredDate +
+                ", enteredTime=" + enteredTime +
+                ", defect='" + defect + '\'' +
+                ", liveUat='" + liveUat + '\'' +
+                ", releaseVersion='" + releaseVersion + '\'' +
+                ", project='" + project + '\'' +
+                ", urgent='" + urgent + '\'' +
+                ", deliverables=" + deliverables +
                 '}';
     }
 }

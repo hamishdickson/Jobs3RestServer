@@ -3,8 +3,6 @@ package com.jhc.figleaf.Jobs3RestApi.resources;
 import com.google.gson.Gson;
 import com.jhc.figleaf.Jobs3RestApi.database.RealTracey;
 import com.jhc.figleaf.Jobs3RestApi.models.Deliverable;
-import com.jhc.figleaf.Jobs3RestApi.models.DeliverableKey;
-import com.jhc.figleaf.Jobs3RestApi.models.Job;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -13,7 +11,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,9 +32,9 @@ public class DeliverablesResource {
     )
     public Response getUsersDeliverables(@ApiParam(value = "User id", required = true) @PathParam("userId") String userId) {
         try {
-            List<DeliverableKey> deliverableKeyList = RealTracey.getDeliverablesForUser(userId);
+            List<Deliverable> deliverables = RealTracey.getDeliverablesForUser(userId);
 
-            return Response.ok().entity(new Gson().toJson(deliverableKeyList)).build();
+            return Response.ok().entity(new Gson().toJson(deliverables)).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }

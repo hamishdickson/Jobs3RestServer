@@ -5,7 +5,9 @@ package com.jhc.figleaf.Jobs3RestApi.models;
  *
  */
 public class Deliverable {
-    private DeliverableKey deliverableKey;
+    private int jobNumber;
+    private int id;
+    private int promisedDate;
     private String type;
     private String description;
     private int deliveredDate;
@@ -14,9 +16,10 @@ public class Deliverable {
     private String app;
     private String internal;
 
-
-    public Deliverable(DeliverableKey deliverableKey, String type, String description, int deliveredDate, String whoDo, String deleted, String app, String internal) {
-        this.deliverableKey = deliverableKey;
+    public Deliverable(int jobNumber, int id, int promisedDate, String type, String description, int deliveredDate, String whoDo, String deleted, String app, String internal) {
+        this.jobNumber = jobNumber;
+        this.id = id;
+        this.promisedDate = promisedDate;
         this.type = type;
         this.description = description;
         this.deliveredDate = deliveredDate;
@@ -26,12 +29,28 @@ public class Deliverable {
         this.internal = internal;
     }
 
-    public DeliverableKey getDeliverableKey() {
-        return deliverableKey;
+    public int getJobNumber() {
+        return jobNumber;
     }
 
-    public void setDeliverableKey(DeliverableKey deliverableKey) {
-        this.deliverableKey = deliverableKey;
+    public void setJobNumber(int jobNumber) {
+        this.jobNumber = jobNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPromisedDate() {
+        return promisedDate;
+    }
+
+    public void setPromisedDate(int promisedDate) {
+        this.promisedDate = promisedDate;
     }
 
     public String getType() {

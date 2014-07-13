@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,16 +65,18 @@ public class RealTracey {
         connection.close();
     }
 
+    // TODO refactor the way the deliverables are got
     public static Job getJob(int jobNumber) throws SQLException {
 
         Job job = null;
+        List<Deliverable> deliverables = new ArrayList<Deliverable>();
 
         try {
             String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE CODEX = " + jobNumber + " FETCH FIRST 1 ROWS ONLY";
             getResultSet(selectSQL);
 
             while (resultSet.next()) {
-                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N");
+                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", getOpenDeliverablesForJob(jobNumber));
             }
 
         } catch (SQLException e) {
@@ -120,6 +121,7 @@ public class RealTracey {
         return doSqlForGetJobsForUserAndStatus(selectSQL);
     }
 
+    // TODO refactor the way the deliverables are got
     private static List<Job> doSqlForGetJobsForUserAndStatus(String sqlStatement) throws SQLException {
         List<Job> jobs = new ArrayList<Job>();
 
@@ -127,7 +129,7 @@ public class RealTracey {
             getResultSet(sqlStatement);
 
             while (resultSet.next()) {
-                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N"));
+                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", getOpenDeliverablesForJob(resultSet.getInt(1))));
             }
 
         } catch (SQLException e) {
@@ -157,15 +159,15 @@ public class RealTracey {
         return new JobNotes(jobNumber, notes, 0);
     }
 
-    public static List<DeliverableKey> getDeliverablesForUser(String whodo) throws SQLException {
-        List<DeliverableKey> deliverableKeys = new ArrayList<DeliverableKey>();
+    public static List<Deliverable> getDeliverablesForUser(String whodo) throws SQLException {
+        List<Deliverable> deliverables = new ArrayList<Deliverable>();
 
-        String sqlStatement = "SELECT CODEX, UNQREF, PROMD8 FROM DELVRB WHERE WHODO='" + whodo.toUpperCase() + "' AND DELTED = ' ' AND DELD8 = 0 ORDER BY CODEX, PROMD8, UNQREF";
+        String sqlStatement = "SELECT CODEX, UNQREF, PROMD8, TYPE, DESC, DELD8, DELTED, APP, INTRNL FROM DELVRB WHERE WHODO='" + whodo.toUpperCase() + "' AND DELTED = ' ' AND DELD8 = 0 ORDER BY CODEX, PROMD8, UNQREF";
         try {
             getResultSet(sqlStatement);
 
             while (resultSet.next()) {
-                deliverableKeys.add(new DeliverableKey(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3)));
+                deliverables.add(new Deliverable(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), whodo, resultSet.getString(7), resultSet.getString(8), resultSet.getString(9)));
             }
 
         } catch (SQLException e) {
@@ -173,20 +175,39 @@ public class RealTracey {
         } finally {
             closeDownQuery();
         }
-        return deliverableKeys;
+        return deliverables;
 
     }
 
-    // TODO have a think about how useful this actually is
+    public static List<Deliverable> getOpenDeliverablesForJob(int jobNumber) throws SQLException {
+        List<Deliverable> deliverables = new ArrayList<Deliverable>();
+
+        String sqlStatement = "SELECT UNQREF, PROMD8, TYPE, DESC, DELD8, WHODO, DELTED, APP, INTRNL FROM DELVRB WHERE CODEX='" + jobNumber + "' AND DELTED = ' ' AND DELD8 = 0 ORDER BY PROMD8, UNQREF";
+        try {
+            getResultSet(sqlStatement);
+
+            while (resultSet.next()) {
+                deliverables.add(new Deliverable(jobNumber, resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(9)));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDownQuery();
+        }
+        return deliverables;
+
+    }
+
     public static Deliverable getDeliverable(int jobNumber, int id) throws SQLException {
         Deliverable deliverable = null;
 
         try {
-            String selectSQL = "SELECT PROMD8, TYPE, DESC, DELD8, DELTED, WHODO, APP, INTRNL FROM " + LIBRARY + "/DELVRB WHERE CODEX=" + jobNumber + " AND UNQREF=" + id + " FETCH FIRST 1 ROWS ONLY";
+            String selectSQL = "SELECT PROMD8, TYPE, DESC, DELD8, WHODO, DELTED, APP, INTRNL FROM " + LIBRARY + "/DELVRB WHERE CODEX=" + jobNumber + " AND UNQREF=" + id + " FETCH FIRST 1 ROWS ONLY";
             getResultSet(selectSQL);
 
             while (resultSet.next()) {
-                deliverable = new Deliverable(new DeliverableKey(jobNumber, id, resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8));
+                deliverable = new Deliverable(jobNumber, id, resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8));
             }
         } catch (SQLException e) {
             e.printStackTrace();
