@@ -207,7 +207,7 @@ public class TestResource {
             response = Response.class,
             responseContainer = "JSON"
     )
-    public Response getUsersDeliverables(@ApiParam(value = "Job number", required = true) @PathParam("jobNumber") int jobNumber) {
+    public Response getJobsDeliverables(@ApiParam(value = "Job number", required = true) @PathParam("jobNumber") int jobNumber) {
         List<DeliverableKey> deliverableKeyList = new ArrayList<DeliverableKey>();
         deliverableKeyList.add(new DeliverableKey(223456, 1, 20140702));
         deliverableKeyList.add(new DeliverableKey(223456, 2, 20140602));

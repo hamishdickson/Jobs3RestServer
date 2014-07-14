@@ -27,7 +27,7 @@ public class Jobs {
         deliverables2.add(new Deliverable(123456, 1, 20140701, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables2.add(new Deliverable(123456, 1, 20140501, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
 
-        jobList.add(new Job(123456, "first description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables));
+        jobList.add(new Job(123456, "first description 123456", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables));
         jobList.add(new Job(223456, "2 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1));
         jobList.add(new Job(323456, "3 description", "HD", "W", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1));
         jobList.add(new Job(423456, "4 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2));
