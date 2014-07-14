@@ -65,18 +65,17 @@ public class RealTracey {
         connection.close();
     }
 
-    // TODO refactor the way the deliverables are got
     public static Job getJob(int jobNumber) throws SQLException {
 
         Job job = null;
-        List<Deliverable> deliverables = new ArrayList<Deliverable>();
+        List<Deliverable> deliverables = getOpenDeliverablesForJob(jobNumber);
 
         try {
             String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE CODEX = " + jobNumber + " FETCH FIRST 1 ROWS ONLY";
             getResultSet(selectSQL);
 
             while (resultSet.next()) {
-                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", getOpenDeliverablesForJob(jobNumber));
+                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", deliverables);
             }
 
         } catch (SQLException e) {
@@ -129,13 +128,18 @@ public class RealTracey {
             getResultSet(sqlStatement);
 
             while (resultSet.next()) {
-                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", getOpenDeliverablesForJob(resultSet.getInt(1))));
+                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", null));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeDownQuery();
+        }
+
+        // ok at this point, we have the jobs, but without any deliverables information in there - sort that out
+        for (Job job : jobs) {
+            job.setDeliverables(getOpenDeliverablesForJob(job.getJobNumber()));
         }
         return jobs;
     }
