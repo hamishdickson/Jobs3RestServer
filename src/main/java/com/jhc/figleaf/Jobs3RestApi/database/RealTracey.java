@@ -124,8 +124,12 @@ public class RealTracey {
     private static List<Job> doSqlForGetJobsForUserAndStatus(String sqlStatement) throws SQLException {
         List<Job> jobs = new ArrayList<Job>();
 
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = null;
+
         try {
-            getResultSet(sqlStatement);
+            resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
                 jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", null));
@@ -134,7 +138,9 @@ public class RealTracey {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeDownQuery();
+            statement.close();
+            resultSet.close();
+            connection.close();
         }
 
         // ok at this point, we have the jobs, but without any deliverables information in there - sort that out
@@ -148,9 +154,13 @@ public class RealTracey {
 
         List<String> notes = new ArrayList<String>();
 
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = null;
+
         try {
             String selectSQL = "SELECT TEXT79 FROM " + LIBRARY + "/JOBSCRAT WHERE CODEX = " + jobNumber + " ORDER BY PAGNUM, LINNUM" ;
-            getResultSet(selectSQL);
+            resultSet = statement.executeQuery(selectSQL);
 
             while (resultSet.next()) {
                 notes.add(resultSet.getString(1));
@@ -158,7 +168,9 @@ public class RealTracey {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeDownQuery();
+            statement.close();
+            resultSet.close();
+            connection.close();
         }
         return new JobNotes(jobNumber, notes, 0);
     }
@@ -166,9 +178,13 @@ public class RealTracey {
     public static List<Deliverable> getDeliverablesForUser(String whodo) throws SQLException {
         List<Deliverable> deliverables = new ArrayList<Deliverable>();
 
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = null;
+
         String sqlStatement = "SELECT CODEX, UNQREF, PROMD8, TYPE, DESC, DELD8, DELTED, APP, INTRNL FROM DELVRB WHERE WHODO='" + whodo.toUpperCase() + "' AND DELTED = ' ' AND DELD8 = 0 ORDER BY CODEX, PROMD8, UNQREF";
         try {
-            getResultSet(sqlStatement);
+            resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
                 deliverables.add(new Deliverable(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), whodo, resultSet.getString(7), resultSet.getString(8), resultSet.getString(9)));
@@ -177,7 +193,9 @@ public class RealTracey {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeDownQuery();
+            statement.close();
+            resultSet.close();
+            connection.close();
         }
         return deliverables;
 
@@ -186,9 +204,13 @@ public class RealTracey {
     public static List<Deliverable> getOpenDeliverablesForJob(int jobNumber) throws SQLException {
         List<Deliverable> deliverables = new ArrayList<Deliverable>();
 
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = null;
+
         String sqlStatement = "SELECT UNQREF, PROMD8, TYPE, DESC, DELD8, WHODO, DELTED, APP, INTRNL FROM DELVRB WHERE CODEX='" + jobNumber + "' AND DELTED = ' ' AND DELD8 = 0 ORDER BY PROMD8, UNQREF";
         try {
-            getResultSet(sqlStatement);
+            resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
                 deliverables.add(new Deliverable(jobNumber, resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(9)));
@@ -197,7 +219,9 @@ public class RealTracey {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeDownQuery();
+            statement.close();
+            resultSet.close();
+            connection.close();
         }
         return deliverables;
 

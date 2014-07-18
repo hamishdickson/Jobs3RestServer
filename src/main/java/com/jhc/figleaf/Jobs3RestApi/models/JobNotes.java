@@ -48,7 +48,7 @@ public class JobNotes {
         StringBuilder sb = new StringBuilder();
 
         for (String s: notesList) {
-            sb.append(s).append(' ');
+            sb.append(s);
         }
 
         // remove the last space
