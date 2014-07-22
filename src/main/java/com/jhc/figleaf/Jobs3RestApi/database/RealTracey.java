@@ -116,11 +116,11 @@ public class RealTracey {
     }
 
     public static List<Job> getJobsForUserAndStatus(String user) throws SQLException {
-        String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "'" ;
+        String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE WHODO = '" + user.toUpperCase() + "' AND STATUS <> 'C'" ;
         return doSqlForGetJobsForUserAndStatus(selectSQL);
     }
 
-    // TODO refactor the way the deliverables are got
+    // TODO is there a better way to get the deliverables?
     private static List<Job> doSqlForGetJobsForUserAndStatus(String sqlStatement) throws SQLException {
         List<Job> jobs = new ArrayList<Job>();
 

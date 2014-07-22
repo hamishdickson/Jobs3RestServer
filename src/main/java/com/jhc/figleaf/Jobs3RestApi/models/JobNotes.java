@@ -49,6 +49,7 @@ public class JobNotes {
 
         for (String s: notesList) {
             sb.append(s);
+            sb.append("\n");
         }
 
         // remove the last space
