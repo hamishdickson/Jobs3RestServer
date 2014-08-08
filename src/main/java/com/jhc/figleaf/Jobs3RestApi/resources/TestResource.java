@@ -97,9 +97,9 @@ public class TestResource {
     @Path("/jobNotes/{jobNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobNotesForJob(@ApiParam(value = "Job number", required = true) @PathParam("jobNumber") int jobNumber) {
-        JobNotes jobNotes = new JobNotes(jobNumber, "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
-                + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
-                + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person was right ... yeah "
+        JobNotes jobNotes = new JobNotes(jobNumber, "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ...                                         actually no, the first person was right ... yeah "
+                + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person                                             was right ... yeah "
+                + "This is a decent sized job note. With lots of blah blah to detail the blah blah that's already been passed. Oh actually thats wrong what I should have said was ... actually no, the first person                     123456               was right ... yeah "
                 , 3);
 
         System.out.println("Call to test system made: job notes for job " + jobNumber);
@@ -184,7 +184,7 @@ public class TestResource {
     )
     public Response getUsersDeliverables(@ApiParam(value = "User id", required = true) @PathParam("userId") String userId) {
         List<DeliverableKey> deliverableKeyList = new ArrayList<DeliverableKey>();
-        deliverableKeyList.add(new DeliverableKey(223456, 1, 20140702));
+        deliverableKeyList.add(new DeliverableKey(223456, 1, 20140902));
         deliverableKeyList.add(new DeliverableKey(223456, 2, 20140602));
         deliverableKeyList.add(new DeliverableKey(223456, 4, 20140802));
         deliverableKeyList.add(new DeliverableKey(323456, 4, 20140803));
