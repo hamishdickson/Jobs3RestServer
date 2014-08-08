@@ -26,7 +26,7 @@ public class RealTracey {
     private static final AS400 as400;
 
     private static final int CLOSE_DATE = 20391231; // this is hard coded in jobs3
-    private static final String JOB_FIELDS = "CODEX, DESCRQ, WHODO, STATUS, CLIENT, IMPORT, WHOPAY, CONTAC, BCODEX, JTYPE, EXTRA4, EXTRA1, SYSTEM, INVTXT, REQUES, TIMEIN, JBUG, LIVUAT, RLSVER, PROJ";
+    private static final String JOB_FIELDS = "CODEX, DESCRQ, WHODO, STATUS, CLIENT, IMPORT, WHOPAY, CONTAC, BCODEX, JTYPE, EXTRA4, EXTRA1, SYSTEM, INVTXT, REQUES, TIMEIN, JBUG, LIVUAT, RLSVER, PROJ, DESCRP";
 
     private static Statement statement;
     private static ResultSet resultSet;
@@ -75,7 +75,7 @@ public class RealTracey {
             getResultSet(selectSQL);
 
             while (resultSet.next()) {
-                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", deliverables);
+                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", deliverables, resultSet.getString(21));
             }
 
         } catch (SQLException e) {
@@ -132,7 +132,7 @@ public class RealTracey {
             resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
-                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", null));
+                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", null, resultSet.getString(21)));
             }
 
         } catch (SQLException e) {

@@ -26,7 +26,7 @@ public class Jobs {
         deliverables1.add(new Deliverable(123456, 1, 20140601, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables2.add(new Deliverable(123456, 1, 20140701, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables2.add(new Deliverable(123456, 1, 20140501, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
-
+/*
         jobList.add(new Job(123456, "first description 123456", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables));
         jobList.add(new Job(223456, "2 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1));
         jobList.add(new Job(323456, "3 description", "HD", "W", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1));
@@ -35,7 +35,7 @@ public class Jobs {
         jobList.add(new Job(623456, "6 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2));
         jobList.add(new Job(723456, "7 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2));
         jobList.add(new Job(823456, "8 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables));
-        jobList.add(new Job(923456, "9 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables));
+        jobList.add(new Job(923456, "9 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables));*/
     }
 
     public static void addJob(Job job) {

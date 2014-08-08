@@ -10,6 +10,7 @@ import java.util.List;
 public class Job {
     private int jobNumber;
     private String description;
+    private String response;
     private String whoDo;
     private String status;
     private String client;
@@ -55,7 +56,7 @@ public class Job {
         this.urgent = urgent;
     }*/
 
-    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables) {
+    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables, String response) {
         this.jobNumber = jobNumber;
         this.description = description;
         this.whoDo = whoDo;
@@ -78,6 +79,7 @@ public class Job {
         this.project = project;
         this.urgent = urgent;
         this.deliverables = deliverables;
+        this.response = response;
     }
 
     public Job() {
@@ -257,6 +259,14 @@ public class Job {
 
     public void setDeliverables(List<Deliverable> deliverables) {
         this.deliverables = deliverables;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     @Override
