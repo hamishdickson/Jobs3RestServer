@@ -17,15 +17,16 @@ public class Jobs {
     private static List<Deliverable> deliverables1 = new ArrayList<Deliverable>();
     private static List<Deliverable> deliverables2 = new ArrayList<Deliverable>();
 
+    private static JobNotes jobNotes;
+
     static {
-        /*jobList.add(new Job(1, "this is a test job", "me do", "A", "bob", 1, "something", "string", 1, "another"));
-        jobList.add(new Job(2, "this is a test job", "me do", "A", "bob", 1, "something", "string", 1, "another"));
-        jobList.add(new Job(3, "this is a test job", "me do", "A", "bob", 1, "something", "string", 1, "another"));*/
         deliverables.add(new Deliverable(123456, 1, 20140901, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables1.add(new Deliverable(123456, 1, 20140723, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables1.add(new Deliverable(123456, 1, 20141001, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables2.add(new Deliverable(123456, 1, 20140701, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
         deliverables2.add(new Deliverable(123456, 1, 20140501, "I", "First deliverable", 0, "HD", "N", "F63", "Y"));
+
+        jobNotes = new JobNotes(123456, "This is the job notes for job number 123456", 0);
 
         jobList.add(new Job(123456, "first description 123456", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 1"));
         jobList.add(new Job(223456, "2 description (with no response)", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1, ""));
@@ -85,5 +86,9 @@ public class Jobs {
             }
         }
         return false;
+    }
+
+    public static void updateNote(JobNotes jobNotes) {
+        Jobs.jobNotes.setNotes(jobNotes.getNotes());
     }
 }

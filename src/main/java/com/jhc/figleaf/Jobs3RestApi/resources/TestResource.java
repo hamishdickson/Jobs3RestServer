@@ -108,6 +108,25 @@ public class TestResource {
 
     }
 
+    /*
+    * Use POST to create new entities
+    */
+    @POST
+    @Path("/jobNotes")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
+    @ApiOperation(
+            value = "Add a new note",
+            notes = "The field for this is only 79 characters long"
+    )
+    public Response addTestNote(@ApiParam(value = "Create a new job note", required = true) JobNotes jobNotes) {
+        Jobs.updateNote(jobNotes);
+
+        // I'm going to return the whole lot just to be nice :)
+        return Response.ok().entity(Jobs.toJsonString()).build();
+    }
+
     @GET
     @Path("/emptyperson")
     @Produces(MediaType.APPLICATION_JSON)
