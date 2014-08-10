@@ -43,6 +43,7 @@ public class Server {
         ServletAdapter jerseyAdapter = new ServletAdapter();
         jerseyAdapter.addInitParameter("com.sun.jersey.config.property.packages", "com.jhc.figleaf.Jobs3RestApi.resources");
         jerseyAdapter.addInitParameter("com.sun.jersey.spi.container.ContainerResponseFilters", "com.jhc.figleaf.Jobs3RestApi.server.ResponseCorsFilter");
+        jerseyAdapter.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
         jerseyAdapter.setContextPath("/jobs3");
         jerseyAdapter.setServletInstance(new ServletContainer());
 

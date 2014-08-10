@@ -1,5 +1,6 @@
 package com.jhc.figleaf.Jobs3RestApi.resources;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 import com.jhc.figleaf.Jobs3RestApi.models.*;
 import com.wordnik.swagger.annotations.*;
@@ -112,6 +113,7 @@ public class TestResource {
     * Use POST to create new entities
     */
     @POST
+    @JsonIgnoreProperties
     @Path("/jobNotes")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

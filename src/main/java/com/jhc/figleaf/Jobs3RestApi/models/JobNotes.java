@@ -35,6 +35,9 @@ public class JobNotes {
         this.softwarePackage = softwarePackage;
     }
 
+    public JobNotes() {
+    }
+
     public JobNotes(int jobNumber, String notes, int softwarePackage) {
         this.jobNumber = jobNumber;
         this.notes = notes;
