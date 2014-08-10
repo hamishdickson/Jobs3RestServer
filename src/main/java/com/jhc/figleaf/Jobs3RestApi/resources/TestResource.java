@@ -123,7 +123,7 @@ public class TestResource {
             notes = "The field for this is only 79 characters long"
     )
     public Response addTestNote(@ApiParam(value = "Create a new job note", required = true) JobNotes jobNotes) {
-        Jobs.updateNote(jobNotes);
+        Jobs.addJobNote(jobNotes);
 
         // I'm going to return the whole lot just to be nice :)
         return Response.ok().entity(Jobs.toJsonString()).build();

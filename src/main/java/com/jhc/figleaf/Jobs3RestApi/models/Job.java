@@ -344,4 +344,8 @@ public class Job {
                 ", deliverables=" + deliverables +
                 '}';
     }
+
+    public void addNotes(String notes) {
+        this.notes.add(notes);
+    }
 }
