@@ -31,32 +31,9 @@ public class Job {
     private String project;
     private String urgent;
     private List<Deliverable> deliverables;
+    private List<String> notes;
 
-/*    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent) {
-        this.jobNumber = jobNumber;
-        this.description = description;
-        this.whoDo = whoDo;
-        this.status = status;
-        this.client = client;
-        this.importance = importance;
-        this.whoPay = whoPay;
-        this.contact = contact;
-        this.workorder = workorder;
-        this.jobType = jobType;
-        this.enteredBy = enteredBy;
-        this.functionalArea = functionalArea;
-        this.system = system;
-        this.invoiceText = invoiceText;
-        this.enteredDate = enteredDate;
-        this.enteredTime = enteredTime;
-        this.defect = defect;
-        this.liveUat = liveUat;
-        this.releaseVersion = releaseVersion;
-        this.project = project;
-        this.urgent = urgent;
-    }*/
-
-    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables, String response) {
+    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables, String response, List<String> notes) {
         this.jobNumber = jobNumber;
         this.description = description;
         this.whoDo = whoDo;
@@ -80,6 +57,7 @@ public class Job {
         this.urgent = urgent;
         this.deliverables = deliverables;
         this.response = response;
+        this.notes = notes;
     }
 
     public Job() {
@@ -267,6 +245,14 @@ public class Job {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public List<String> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<String> notes) {
+        this.notes = notes;
     }
 
     @Override

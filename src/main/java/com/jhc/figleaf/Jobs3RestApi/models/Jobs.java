@@ -28,15 +28,19 @@ public class Jobs {
 
         jobNotes = new JobNotes(123456, "This is the job notes for job number 123456", 0);
 
-        jobList.add(new Job(123456, "first description 123456", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 1"));
-        jobList.add(new Job(223456, "2 description (with no response)", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1, ""));
-        jobList.add(new Job(323456, "3 description", "HD", "W", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1, "Response 3"));
-        jobList.add(new Job(423456, "4 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 4"));
-        jobList.add(new Job(523456, "5 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 5"));
-        jobList.add(new Job(623456, "6 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 6"));
-        jobList.add(new Job(723456, "7 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 7"));
-        jobList.add(new Job(823456, "8 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 8"));
-        jobList.add(new Job(923456, "9 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 9"));
+        List<String> note = new ArrayList<String>();
+
+        note.add("This is the job notes for job number 123456");
+
+        jobList.add(new Job(123456, "first description 123456", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 1", note));
+        jobList.add(new Job(223456, "2 description (with no response)", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1, "Repsonse", note));
+        jobList.add(new Job(323456, "3 description", "HD", "W", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1, "Response 3", note));
+        jobList.add(new Job(423456, "4 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 4", note));
+        jobList.add(new Job(523456, "5 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 5", note));
+        jobList.add(new Job(623456, "6 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 6", note));
+        jobList.add(new Job(723456, "7 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables2, "Response 7", note));
+        jobList.add(new Job(823456, "8 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 8", note));
+        jobList.add(new Job(923456, "9 description", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 9", note));
     }
 
     public static void addJob(Job job) {

@@ -70,12 +70,16 @@ public class RealTracey {
         Job job = null;
         List<Deliverable> deliverables = getOpenDeliverablesForJob(jobNumber);
 
+        List<String> notes = new ArrayList<String>();
+
+        notes.add(getJobNotes(jobNumber).getNotes());
+
         try {
             String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE CODEX = " + jobNumber + " FETCH FIRST 1 ROWS ONLY";
             getResultSet(selectSQL);
 
             while (resultSet.next()) {
-                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", deliverables, resultSet.getString(21));
+                job = new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", deliverables, resultSet.getString(21), notes);
             }
 
         } catch (SQLException e) {
@@ -132,7 +136,7 @@ public class RealTracey {
             resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
-                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", null, resultSet.getString(21)));
+                jobs.add(new Job(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getString(8), resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11), resultSet.getString(12), resultSet.getString(13), resultSet.getString(14), resultSet.getInt(15), resultSet.getInt(16), resultSet.getString(17), resultSet.getString(18), resultSet.getString(19), resultSet.getString(20), "N", null, resultSet.getString(21), null));
             }
 
         } catch (SQLException e) {
@@ -143,9 +147,16 @@ public class RealTracey {
             connection.close();
         }
 
+        List<String> notes = new ArrayList<String>();
+
         // ok at this point, we have the jobs, but without any deliverables information in there - sort that out
         for (Job job : jobs) {
             job.setDeliverables(getOpenDeliverablesForJob(job.getJobNumber()));
+
+            notes.add(getJobNotes(job.getJobNumber()).getNotes());
+            job.setNotes(notes);
+
+            notes.clear();
         }
         return jobs;
     }

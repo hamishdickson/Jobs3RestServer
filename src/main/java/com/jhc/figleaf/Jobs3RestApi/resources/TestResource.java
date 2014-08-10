@@ -90,7 +90,7 @@ public class TestResource {
         Person person = new Person("Hamish Dickson", "HD", "NB", "DICKSONH");
 
         return Response.ok().entity(new Gson().toJson(person)).build();
-
+        //return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @GET
