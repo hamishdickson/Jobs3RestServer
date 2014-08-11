@@ -156,7 +156,7 @@ public class RealTracey {
             notes.add(getJobNotes(job.getJobNumber()).getNotes());
             job.setNotes(notes);
 
-            notes.clear();
+            notes = new ArrayList<String>();
         }
         return jobs;
     }
