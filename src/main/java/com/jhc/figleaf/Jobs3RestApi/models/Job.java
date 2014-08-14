@@ -31,9 +31,9 @@ public class Job {
     private String project;
     private String urgent;
     private List<Deliverable> deliverables;
-    private List<String> notes;
+    private String notes;
 
-    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables, String response, List<String> notes) {
+    public Job(int jobNumber, String description, String whoDo, String status, String client, int importance, String whoPay, String contact, int workorder, String jobType, String enteredBy, String functionalArea, String system, String invoiceText, int enteredDate, int enteredTime, String defect, String liveUat, String releaseVersion, String project, String urgent, List<Deliverable> deliverables, String response, String notes) {
         this.jobNumber = jobNumber;
         this.description = description;
         this.whoDo = whoDo;
@@ -247,11 +247,11 @@ public class Job {
         this.response = response;
     }
 
-    public List<String> getNotes() {
+    public String getNotes() {
         return notes;
     }
 
-    public void setNotes(List<String> notes) {
+    public void setNotes(String notes) {
         this.notes = notes;
     }
 
@@ -345,7 +345,4 @@ public class Job {
                 '}';
     }
 
-    public void addNotes(String notes) {
-        this.notes.add(notes);
-    }
 }

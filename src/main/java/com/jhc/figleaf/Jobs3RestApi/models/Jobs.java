@@ -28,12 +28,8 @@ public class Jobs {
 
         jobNotes = new JobNotes(123456, "This is the job notes for job number 123456", 0);
 
-        List<String> note = new ArrayList<String>();
-        List<String> note1 = new ArrayList<String>();
-
-
-        note1.add("This is the job notes for job number 123456");
-        note.add("This is the job notes for all other jobs");
+        String note1 = "This is the job notes for job number 123456 This is the job notes for \n job number \n123456 This is the job notes for job number 123456 This is the job notes for job number 123456";
+        String note = "This is the job notes for all other jobs";
 
         jobList.add(new Job(123456, "first description 123456", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables, "Response 1", note1));
         jobList.add(new Job(223456, "2 description (with no response)", "HD", "A", "JHC", 3, "JHC", "Hamish", 2, "J", "HD", "WEBWEB", "TRACEY", "Test Job 1", 20140624, 900, "N", "L", "F63", "JOBS", "Y", deliverables1, "Repsonse", note));
@@ -74,7 +70,7 @@ public class Jobs {
         for(Job job : jobList) {
             int jobnumber = job.getJobNumber();
             if (jobNote.getJobNumber() == jobnumber) {
-                job.addNotes(jobNote.getNotes());
+                job.setNotes(job.getNotes() + "\n" + jobNote.getNotes());
             }
         }
     }

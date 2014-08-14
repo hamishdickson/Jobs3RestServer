@@ -70,9 +70,7 @@ public class RealTracey {
         Job job = null;
         List<Deliverable> deliverables = getOpenDeliverablesForJob(jobNumber);
 
-        List<String> notes = new ArrayList<String>();
-
-        notes.add(getJobNotes(jobNumber).getNotes());
+        String notes = getJobNotes(jobNumber).getNotes();
 
         try {
             String selectSQL = "SELECT " + JOB_FIELDS + " FROM " + LIBRARY + "/JOBS3 WHERE CODEX = " + jobNumber + " FETCH FIRST 1 ROWS ONLY";
@@ -147,16 +145,16 @@ public class RealTracey {
             connection.close();
         }
 
-        List<String> notes = new ArrayList<String>();
+        String notes = "";
 
         // ok at this point, we have the jobs, but without any deliverables information in there - sort that out
         for (Job job : jobs) {
             job.setDeliverables(getOpenDeliverablesForJob(job.getJobNumber()));
 
-            notes.add(getJobNotes(job.getJobNumber()).getNotes());
+            notes = getJobNotes(job.getJobNumber()).getNotes();
             job.setNotes(notes);
 
-            notes = new ArrayList<String>();
+            notes = "";
         }
         return jobs;
     }
@@ -258,7 +256,41 @@ public class RealTracey {
     }
 
     /**
-     * This returns a job and a work order
+     * Add a note to the jobs system
+     */
+
+    public static void addNotes(int jobNumber, List<List<String>> notes) throws SQLException {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            Connection connection = dataSource.getConnection();
+            String insertSQL = "INSERT INTO " + LIBRARY + "/JOBSCRT "
+                    + "( ... ) VALUES "
+                    + "( ... )";
+
+            preparedStatement = connection.prepareStatement(insertSQL);
+
+            preparedStatement.setInt(1, jobNumber);
+
+            /*
+             * GUHHHH
+             */
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+        }
+    }
+
+
+    /**
+     * Create a new job
      */
     public static Job addJob(Job job) throws InterruptedException, IOException, SQLException, IllegalObjectTypeException, ObjectDoesNotExistException, ErrorCompletingRequestException, AS400SecurityException {
 
@@ -270,7 +302,7 @@ public class RealTracey {
         try {
             Connection connection = dataSource.getConnection();
             String insertSQL = "INSERT INTO " + LIBRARY + "/JOBS3 "
-                    + "(" + JOB_FIELDS + ", APPROV, COMPLE) VALUES"
+                    + "(" + JOB_FIELDS + ", APPROV, COMPLE) VALUES "
                     + "(?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             preparedStatement = connection.prepareStatement(insertSQL);

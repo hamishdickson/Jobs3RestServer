@@ -129,4 +129,49 @@ public class JobsResource {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
+    /**
+     *
+     * Add a new note to a job
+     *
+     * OK, so this is going to split the note in jobNotes up into 79 char long chunks ...
+     * then add that to a List<List<String>>
+     *
+     */
+/*    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addNote(@ApiParam(value = "Add note", required = true) JobNotes jobNotes) {
+
+        int job = jobNotes.getJobNumber();
+        String note = jobNotes.getNotes();
+
+        List<String> notesOnPage = new ArrayList<String>();
+
+        List<List<String>> notesByPage = new ArrayList<List<String>>();
+
+        int count = 0;
+        int chunk = 78;
+        int start = 0;
+        int end = 78;
+
+        while (note.length() > 0) {
+            notesOnPage.add(count++, note.substring(start, end));
+            start += chunk;
+            end += chunk;
+
+            if (count >= 15) {
+                notesByPage.add(notesOnPage);
+                notesOnPage.clear();
+                count = 0;
+            }
+        }
+
+        // if there is anything left, add it to the last page
+        notesByPage.add(notesOnPage);
+        notesOnPage.clear();
+
+        // now call RealTracey and post it
+
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }*/
 }
